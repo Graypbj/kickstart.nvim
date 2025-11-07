@@ -191,21 +191,21 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 
 -- Grayson - Auto indent settings
-vim.opt.expandtab = false
-vim.opt.smarttab = true
-vim.opt.autoindent = true
-vim.opt.smartindent = true
-vim.opt.cindent = true
+-- vim.opt.expandtab = false
+-- vim.opt.smarttab = true
+-- vim.opt.autoindent = true
+-- vim.opt.smartindent = true
+-- vim.opt.cindent = true
 
+-- Grayson - commented out Copilot
 -- Escape insert mode *and* dismiss Copilot suggestions
-vim.keymap.set('i', '<Esc>', function()
-  local ok, suggestion = pcall(require, 'copilot.suggestion')
-  if ok and suggestion and suggestion.is_visible() then
-    suggestion.dismiss()
-  end
-  return '<Esc>'
-end, { expr = true, silent = true })
-
+-- vim.keymap.set('i', '<Esc>', function()
+--   local ok, suggestion = pcall(require, 'copilot.suggestion')
+--   if ok and suggestion and suggestion.is_visible() then
+--     suggestion.dismiss()
+--   end
+--   return '<Esc>'
+-- end, { expr = true, silent = true })
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
@@ -315,47 +315,48 @@ require('lazy').setup({
     end,
   },
 
+  -- Grayson - Commented out Copilot
   -- GitHub Copilot
-  {
-    'zbirenbaum/copilot.lua',
-    cmd = 'Copilot',
-    event = 'InsertEnter',
-    config = function()
-      require('copilot').setup {
-        suggestion = {
-          enabled = true,
-          auto_trigger = true,
-          debounce = 75,
-          keymap = {
-            accept = '<Tab>',
-            next = '<C-j>',
-            prev = '<C-k>',
-            dismiss = '<C-c>',
-          },
-        },
-        panel = {
-          enabled = true,
-          auto_refresh = false,
-          keymap = {
-            jump_prev = '[[',
-            jump_next = ']]',
-            accept = '<CR>',
-            refresh = 'gr',
-            open = '<M-CR>',
-          },
-        },
-        filetypes = {
-          markdown = true,
-          help = false,
-          gitcommit = true,
-          gitrebase = true,
-          ['*'] = true, -- enable for all filetypes
-        },
-        copilot_node_command = 'node', -- Ensure correct Node.js path
-        server_opts_overrides = {},
-      }
-    end,
-  },
+  --   {
+  --     'zbirenbaum/copilot.lua',
+  --     cmd = 'Copilot',
+  --     event = 'InsertEnter',
+  --     config = function()
+  --       require('copilot').setup {
+  --         suggestion = {
+  --           enabled = true,
+  --           auto_trigger = true,
+  --           debounce = 75,
+  --           keymap = {
+  --             accept = '<Tab>',
+  --             next = '<C-j>',
+  --             prev = '<C-k>',
+  --             dismiss = '<C-c>',
+  --           },
+  --         },
+  --         panel = {
+  --           enabled = true,
+  --           auto_refresh = false,
+  --           keymap = {
+  --             jump_prev = '[[',
+  --             jump_next = ']]',
+  --             accept = '<CR>',
+  --             refresh = 'gr',
+  --             open = '<M-CR>',
+  --           },
+  --         },
+  --         filetypes = {
+  --           markdown = true,
+  --           help = false,
+  --           gitcommit = true,
+  --           gitrebase = true,
+  --           ['*'] = true, -- enable for all filetypes
+  --         },
+  --         copilot_node_command = 'node', -- Ensure correct Node.js path
+  --         server_opts_overrides = {},
+  --       }
+  --     end,
+  --   },
 
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
   -- If you prefer to call `setup` explicitly, use:
@@ -1086,7 +1087,7 @@ require('lazy').setup({
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    main = 'nvim-treesitter.configs', -- Sets main module to use for opts
+    -- main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
       ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'java' },
@@ -1101,6 +1102,9 @@ require('lazy').setup({
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
+    config = function(_, opts)
+      require('nvim-treesitter.config').setup(opts)
+    end,
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
     --
